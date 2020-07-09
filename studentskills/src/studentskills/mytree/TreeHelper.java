@@ -1,10 +1,10 @@
-package mytree;
+package studentskills.mytree;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import studentskills.util.StudentDetails;
-import mytree.StudentRecord;
 
 public class TreeHelper {
 
@@ -22,8 +22,21 @@ public class TreeHelper {
 		StudentRecord sr = createStudentRecord(hm);
 		t1.insert(sr);		
 		try {
-			t2.insert(sr.myClone());
-			t3.insert(sr.myClone());
+			StudentRecord clone1=sr.myClone();
+			StudentRecord clone2=sr.myClone();
+			
+			sr.registerObserver(clone1);
+			clone1.registerObserver(sr);
+			
+			sr.registerObserver(clone2);
+			clone2.registerObserver(sr);
+			
+			clone1.registerObserver(clone2);
+			clone2.registerObserver(clone1);
+			
+			t2.insert(clone1);
+			t3.insert(clone2);
+			
 		} catch (Exception cnx) {
 			throw new RuntimeException("Failed to insert, please try again", cnx);
 		}
@@ -52,5 +65,13 @@ public class TreeHelper {
 		return sr;
 
 	}
+	
+	public void modify(Map<String, Object> hm) {
+		
+		
+		
+	}
+	
+	
 
 }

@@ -7,5 +7,9 @@ public enum StudentDetails {
 	GPA,
 	MAJOR,
 	SKILL,
+	
+	REPLICA_ID,
+	ORIG_VALUE,
+	NEW_VALUE,
 
 }

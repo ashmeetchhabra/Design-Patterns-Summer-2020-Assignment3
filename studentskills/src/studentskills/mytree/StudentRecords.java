@@ -1,4 +1,4 @@
-package mytree;
+package studentskills.mytree;
 
 public class StudentRecords {
 	StudentRecord root = null;
