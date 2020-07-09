@@ -1,4 +1,4 @@
-package util;
+package studentskills.util;
 
 public class StdoutDisplayInterface {
 
