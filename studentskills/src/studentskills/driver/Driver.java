@@ -45,28 +45,18 @@ public class Driver {
 			while ((line = fp.poll()) != null) {
 				HashMap<String, Object> hm = (HashMap<String, Object>) lh.lineModifyProcessor(line);
 				th.modify(hm);
-				switch ((int)hm.get(StudentDetails.REPLICA_ID.name())) {
-				case 0:{
-					th.printTree(res1, (int)hm.get(StudentDetails.REPLICA_ID.name()));
-					break;}
-				case 1:{
-					th.printTree(res2, (int)hm.get(StudentDetails.REPLICA_ID.name()));
-					break;
-				}
-				case 2:{
-					th.printTree(res3, (int)hm.get(StudentDetails.REPLICA_ID.name()));
-					break;					
-				}
 
-				default:
-					break;
-				}
 
 
 			}
-			res1.closeFile();
-			res2.closeFile();
-			res3.closeFile();
+			
+			for (int i = 0; i < 3; i++) {
+				Results res11 = new Results(args[i+1]);
+				th.printTree(res11, i);
+				res11.closeFile();
+				
+				
+			}
 			
 		
 //			th.printTree(new Results(""),1);
