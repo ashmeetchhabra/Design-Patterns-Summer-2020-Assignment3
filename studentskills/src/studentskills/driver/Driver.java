@@ -20,7 +20,7 @@ public class Driver {
 
 		// Initializations
 		FileProcessor fp;
-		TreeHelper th = new TreeHelper();
+		TreeHelper th = new TreeHelper(3);
 		try {
 			LineHandler lh = new LineHandler();
 			String line;
@@ -38,6 +38,8 @@ public class Driver {
 			while ((line = fp.poll()) != null) {
 				HashMap<String, Object> hm = (HashMap<String, Object>) lh.lineModifyProcessor(line);
 				th.modify(hm);
+				
+				
 			}
 
 			th.printTree();

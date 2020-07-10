@@ -1,7 +1,7 @@
 package studentskills.mytree;
 
 public class StudentRecords {
-	StudentRecord root = null;
+	protected StudentRecord root = null;
 
 	public void insert(StudentRecord sr) {
 		/* If the tree is empty, return a new node */
@@ -24,6 +24,10 @@ public class StudentRecords {
 				root.rightChild = sr;
 			else
 				insert(root.rightChild, sr);
+		}
+		else if (root.bNumber == sr.bNumber) {
+//			TODO: Append skills
+			
 		}
 
 	}
@@ -54,7 +58,12 @@ public class StudentRecords {
 	private void inorderRec(StudentRecord root) {
 		if (root != null) {
 			inorderRec(root.leftChild);
-			System.out.println(root.bNumber);
+			System.out.println();
+			System.out.print(root.bNumber+" ");
+			System.out.print(root.firstName+" "+root.lastName+" "+root.gpa+" "+root.major+" ");
+			for (String sk : root.skills) {
+				System.out.print(sk+" ");
+			}
 			inorderRec(root.rightChild);
 		}
 	}

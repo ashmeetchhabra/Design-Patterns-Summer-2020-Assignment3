@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import studentskills.util.StudentDetails;
+
 public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 	final int bNumber;
 
@@ -61,6 +63,10 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 	public double getGpa() {
 		return gpa;
 	}
+	
+	public void setGpa(double gpa) {
+		this.gpa = gpa;
+	}
 
 	public String getMajor() {
 		return major;
@@ -99,19 +105,39 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 	public void notifyObservers() {
 		for (int i = 0; i < observers.size(); i++) {
 			ObserverI observer = (ObserverI) observers.get(i);
-			observer.update(firstName, lastName, major, updateSkill);
+			observer.update(firstName, lastName, major, skills);
 		}
 	}
 
 	@Override
-	public void update(String firstName, String lastName, String major, Map<String, String> skill) {
-		// TODO Auto-generated method stub
-
+	public void update(String firstName, String lastName, String major, List<String> skills) {
+		this.firstName=firstName;
+		this.lastName= lastName;
+		this.major= major;
+		this.skills=skills;
 	}
+
+	public void modify(Map<String, Object> hm) {
+		if (this.firstName.equals(hm.get(StudentDetails.ORIG_VALUE.name()))) {
+			this.setFirstName((String) hm.get(StudentDetails.NEW_VALUE.name()));
+		} else if (this.lastName.equals(hm.get(StudentDetails.ORIG_VALUE.name()))) {
+			this.setLastName((String) hm.get(StudentDetails.NEW_VALUE.name()));
+		} else if (this.major.equals(hm.get(StudentDetails.ORIG_VALUE.name()))) {
+			this.setMajor((String) hm.get(StudentDetails.NEW_VALUE.name()));
+		} else {
+			this.skills.remove(hm.get(StudentDetails.ORIG_VALUE.name()));
+			this.skills.add((String) hm.get(StudentDetails.NEW_VALUE.name()));
+		}
+		this.notifyObservers();
+	}
+	
+
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "StudentRecord [bNumber=" + bNumber + ", leftChild=" + leftChild + ", rightChild=" + rightChild
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", major=" + major + ", gpa=" + gpa
+				+ ", skills=" + skills + ", updateSkill=" + updateSkill + ", observers=" + observers + "]";
 	}
+
 }

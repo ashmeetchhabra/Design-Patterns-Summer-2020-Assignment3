@@ -40,7 +40,7 @@ public class LineHandler {
 		String bNumber = s1[1];
 		String s2[]=s1[2].split(":");
 		String originalValue = s2[0];
-		String newValue = s2[0];
+		String newValue = s2[1];
 		
 		hm.put(StudentDetails.REPLICA_ID.name(), Integer.parseInt(treeNumber));
 		hm.put(StudentDetails.B_NUMBER.name(), Integer.parseInt(bNumber));
