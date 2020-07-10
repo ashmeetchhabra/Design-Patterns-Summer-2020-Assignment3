@@ -1,5 +1,9 @@
 package studentskills.mytree;
 
+import java.io.IOException;
+
+import studentskills.util.Results;
+
 public class StudentRecords {
 	protected StudentRecord root = null;
 
@@ -50,22 +54,24 @@ public class StudentRecords {
 
 	}
 
-	public void inorder() {
-		inorderRec(root);
+	public void inorder(Results res) throws IOException {
+		inorderRec(root,res);
 	}
 
 	// A utility function to do inorder traversal of BST
-	private void inorderRec(StudentRecord root) {
+	private void inorderRec(StudentRecord root, Results res) throws IOException {
 		if (root != null) {
-			inorderRec(root.leftChild);
-			System.out.println();
-			System.out.print(root.bNumber+" ");
-			System.out.print(root.firstName+" "+root.lastName+" "+root.gpa+" "+root.major+" ");
+			inorderRec(root.leftChild,res);
+			System.out.print(root.bNumber+" "+root.firstName+" "+root.lastName+" "+root.gpa+" "+root.major+" ");
+			res.writeToFile(root.bNumber+" "+root.firstName+" "+root.lastName+" "+root.gpa+" "+root.major+" ");
 			for (String sk : root.skills) {
 				System.out.print(sk+" ");
+				res.writeToFile(sk+" ");
 			}
-			inorderRec(root.rightChild);
+			inorderRec(root.rightChild,res);
 		}
+		System.out.println();
+		res.writeToFile("\n");
 	}
 
 }

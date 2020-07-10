@@ -1,15 +1,26 @@
 package studentskills.mytree;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import studentskills.util.MyLogger;
+import studentskills.util.MyLogger.DebugLevel;
+import studentskills.util.Results;
 import studentskills.util.StudentDetails;
+import sun.util.logging.resources.logging;
 
 public class TreeHelper {
 
 	Map<Integer, StudentRecords> hashMapStudentRecords = new HashMap<Integer, StudentRecords>();
-
+//	MyLogger log = new MyLogger();
+	
+	
+	
 	public TreeHelper(int n) {
+		MyLogger.setDebugValue(2);
+		MyLogger.writeMessage("In Tree Helper Constructor", DebugLevel.CONSTRUCTOR);
 
 		for (int i = 0; i < n; i++) {
 			hashMapStudentRecords.put(i, new StudentRecords());
@@ -41,16 +52,10 @@ public class TreeHelper {
 		}
 	}
 
-	public void printTree() {
+	public void printTree(Results res, int i) throws IOException {
 
-		System.out.println("Tree 1");
-		hashMapStudentRecords.get(0).inorder();
-
-		System.out.println("Tree 2");
-		hashMapStudentRecords.get(1).inorder();
-
-		System.out.println("Tree 3");
-		hashMapStudentRecords.get(2).inorder();
+		System.out.println("Tree "+i);
+		hashMapStudentRecords.get(i).inorder(res);
 	}
 
 	private StudentRecord createStudentRecord(HashMap<String, Object> hm) {
@@ -70,6 +75,10 @@ public class TreeHelper {
 				.search((int) hm.get(StudentDetails.B_NUMBER.name()));
 		
 		sr.modify(hm);
+//		Print tree in output file
+//		if replicaid == 0, res = output1
+//		call print tree(result res, replica id)
+//		
 
 	}
 

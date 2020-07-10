@@ -1,5 +1,12 @@
 package studentskills.util;
 
-public class StdoutDisplayInterface {
+public interface StdoutDisplayInterface {
+
+	/**
+	 * Prints different number of arguments to the console
+	 * 
+	 * @param obj Varargs used to print on console
+	 */
+	void printToConsole(Object[] obj);
 
 }
