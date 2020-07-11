@@ -74,11 +74,7 @@ public class TreeHelper {
 		StudentRecord sr = hashMapStudentRecords.get((int) hm.get(StudentDetails.REPLICA_ID.name()))
 				.search((int) hm.get(StudentDetails.B_NUMBER.name()));
 		
-		sr.modify(hm);
-//		Print tree in output file
-//		if replicaid == 0, res = output1
-//		call print tree(result res, replica id)
-//		
+		sr.modify(hm,false);		
 
 	}
 

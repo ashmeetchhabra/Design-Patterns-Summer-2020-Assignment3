@@ -33,13 +33,15 @@ public class LineHandler {
 		return hm;
 	}
 	
-	public HashMap<String, ?> lineModifyProcessor(String line) {
+	public HashMap<String, ?> lineModifyProcessor(String line) throws ArrayIndexOutOfBoundsException {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		String s1[] = line.split(",");
 		String treeNumber =s1[0];
 		String bNumber = s1[1];
 		String s2[]=s1[2].split(":");
 		String originalValue = s2[0];
+		
+		
 		String newValue = s2[1];
 		
 		hm.put(StudentDetails.REPLICA_ID.name(), Integer.parseInt(treeNumber));

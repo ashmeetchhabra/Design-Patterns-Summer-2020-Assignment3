@@ -2,6 +2,8 @@ package studentskills.mytree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +65,7 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 	public double getGpa() {
 		return gpa;
 	}
-	
+
 	public void setGpa(double gpa) {
 		this.gpa = gpa;
 	}
@@ -111,27 +113,49 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 
 	@Override
 	public void update(String firstName, String lastName, String major, List<String> skills) {
-		this.firstName=firstName;
-		this.lastName= lastName;
-		this.major= major;
-		this.skills=skills;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.major = major;
+		this.skills = skills;
 	}
 
-	public void modify(Map<String, Object> hm) {
-		if (this.firstName.equals(hm.get(StudentDetails.ORIG_VALUE.name()))) {
-			this.setFirstName((String) hm.get(StudentDetails.NEW_VALUE.name()));
-		} else if (this.lastName.equals(hm.get(StudentDetails.ORIG_VALUE.name()))) {
-			this.setLastName((String) hm.get(StudentDetails.NEW_VALUE.name()));
-		} else if (this.major.equals(hm.get(StudentDetails.ORIG_VALUE.name()))) {
-			this.setMajor((String) hm.get(StudentDetails.NEW_VALUE.name()));
-		} else {
-			this.skills.remove(hm.get(StudentDetails.ORIG_VALUE.name()));
-			this.skills.add((String) hm.get(StudentDetails.NEW_VALUE.name()));
-		}
-		this.notifyObservers();
-	}
+	public void modify(Map<String, Object> hm, boolean isInsertModify) {
+
+		if (isInsertModify) {
+			this.setFirstName((String) hm.get(StudentDetails.FIRST_NAME.name()));
+			this.setLastName((String) hm.get(StudentDetails.LAST_NAME.name()));
+			this.setGpa((Double) hm.get(StudentDetails.GPA.name()));
+			this.setMajor((String) hm.get(StudentDetails.MAJOR.name()));
+
+			List<String> existingSkills = this.getSkills();
+			List<String> newSkills = new ArrayList<String>((List<String>) hm.get(StudentDetails.SKILL.name()));
 	
+			for (String newSkill : newSkills) {
+				
+				if(!existingSkills.contains(newSkill)) {
+					existingSkills.add(newSkill);
+				}
+				
+				
+			}
+			this.setSkills(existingSkills);
+			this.notifyObservers();
 
+		} else {
+
+			if (this.firstName.equals(hm.get(StudentDetails.ORIG_VALUE.name()))) {
+				this.setFirstName((String) hm.get(StudentDetails.NEW_VALUE.name()));
+			} else if (this.lastName.equals(hm.get(StudentDetails.ORIG_VALUE.name()))) {
+				this.setLastName((String) hm.get(StudentDetails.NEW_VALUE.name()));
+			} else if (this.major.equals(hm.get(StudentDetails.ORIG_VALUE.name()))) {
+				this.setMajor((String) hm.get(StudentDetails.NEW_VALUE.name()));
+			} else {
+				this.skills.remove(hm.get(StudentDetails.ORIG_VALUE.name()));
+				this.skills.add((String) hm.get(StudentDetails.NEW_VALUE.name()));
+			}
+			this.notifyObservers();
+		}
+	}
 
 	@Override
 	public String toString() {
