@@ -9,11 +9,10 @@ import studentskills.util.MyLogger.DebugLevel;
 
 public class LineHandler {
 	/**
-	 * Processes the line and retun a Map
+	 * Processes the line and return a Map
 	 * 
 	 * @param line: line of the Input file
-	 * @return HashMap<String, ?> of videoname and the parameters(Metrics and
-	 *         length)
+	 * @return HashMap<String, Object> of student record 
 	 * @throws IOException
 	 */
 	public HashMap<String, ?> lineInputProcessor(String line) throws IOException {
@@ -21,9 +20,8 @@ public class LineHandler {
 		List<String> skills = new ArrayList<String>();
 		int noOfSkills = 0;
 
-		MyLogger.writeMessage("InputLineProcessor", DebugLevel.LINEHANDLER);
+		MyLogger.writeMessage("InputLineProcessor: creating a hashMap", DebugLevel.LINEHANDLER);
 
-		System.out.println(line);
 		String s1[] = line.split(":");
 		hm.put(StudentDetails.B_NUMBER.name(), s1[0]);
 		String ss[] = s1[1].split(",");
@@ -42,10 +40,15 @@ public class LineHandler {
 		return hm;
 	}
 
+	/**
+	 * @param line: line of the Input file
+	 * @return  HashMap<String, Object> of modify file
+	 * @throws IOException
+	 */
 	public HashMap<String, ?> lineModifyProcessor(String line) throws IOException {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 
-		MyLogger.writeMessage("ModifyLineProcessor", DebugLevel.LINEHANDLER);
+		MyLogger.writeMessage("ModifyLineProcessor: creating a hashMap", DebugLevel.LINEHANDLER);
 		String s1[] = line.split(",");
 		String treeNumber = s1[0];
 		String bNumber = s1[1];

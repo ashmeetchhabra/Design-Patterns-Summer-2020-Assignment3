@@ -13,6 +13,11 @@ public class StudentRecords {
 
 	protected StudentRecord root = null;
 
+	/**
+	 * inserts the sr, student record in the tree
+	 * @param sr
+	 * @throws IOException
+	 */
 	public void insert(StudentRecord sr) throws IOException {
 		MyLogger.writeMessage("Insert node in tree", DebugLevel.STUDENTRECORDS);
 
@@ -51,6 +56,12 @@ public class StudentRecords {
 
 	}
 
+	/**
+	 * Serach a student record (Node) from StudentRecords (Tree)
+	 * @param bNum
+	 * @return
+	 * @throws IOException
+	 */
 	public StudentRecord search(int bNum) throws IOException {
 		return search(root, bNum);
 	}
@@ -70,6 +81,11 @@ public class StudentRecords {
 
 	}
 
+	/**
+	 * Print the Tree of StudentRecords
+	 * @param res
+	 * @throws IOException
+	 */
 	public void inorder(Results res) throws IOException {
 		MyLogger.writeMessage("Print nodes in tree", DebugLevel.STUDENTRECORDS);
 		inorderRec(root, res);
@@ -79,16 +95,20 @@ public class StudentRecords {
 	private void inorderRec(StudentRecord root, Results res) throws IOException {
 		if (root != null) {
 			inorderRec(root.leftChild, res);
-			System.out.print(root.bNumber + " " + root.firstName + " " + root.lastName + " " + root.gpa + " "
+			
+			res.printToConsole(root.bNumber + " " + root.firstName + " " + root.lastName + " " + root.gpa + " "
 					+ root.major + " ");
+			
 			res.writeToFile(String.valueOf(root.bNumber + " "));
 			for (String sk : root.skills) {
-				System.out.print(sk + " ");
+				res.printToConsole(sk + " ");
+
 				res.writeToFile(sk + " ");
 			}
 			inorderRec(root.rightChild, res);
 		}
-		System.out.println();
+		res.printToConsole("\n");
+
 		res.writeToFile("\n");
 	}
 

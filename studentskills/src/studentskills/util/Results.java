@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import studentskills.util.FileDisplayInterface;
 import studentskills.util.StdoutDisplayInterface;
+import studentskills.util.MyLogger.DebugLevel;
 
 public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 
@@ -31,6 +32,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 
 	@Override
 	public void writeToFile(String str) throws IOException {
+		MyLogger.writeMessage("Data is written to a file", DebugLevel.RESULTS);
 		write.write(str);
 	}
 
@@ -38,12 +40,14 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 	 * Prints different number of arguments to the console
 	 * 
 	 * @param obj Varargs used to print on console
+	 * @throws IOException 
 	 */
 
 	@Override
-	public void printToConsole(Object... obj) {
+	public void printToConsole(Object... obj) throws IOException {
+		MyLogger.writeMessage("Printing to console", DebugLevel.RESULTS);
 		for (int i = 0; i < obj.length; i++) {
-			System.out.println(obj[i]);
+			System.out.print(obj[i]);
 		}
 	}
 
@@ -54,6 +58,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 	 */
 
 	public void closeFile() throws IOException {
+		MyLogger.writeMessage("Closing of the file", DebugLevel.RESULTS);
 		write.close();
 
 	}

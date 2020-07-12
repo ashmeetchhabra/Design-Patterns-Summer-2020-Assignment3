@@ -10,6 +10,12 @@ import studentskills.util.MyLogger;
 import studentskills.util.MyLogger.DebugLevel;
 import studentskills.util.Results;
 
+/**
+ * @author ashmeet
+ * 
+ * Code starts implementing from here
+ *
+ */
 public class Driver {
 	private static final int REQUIRED_NUMBER_OF_CMDLINE_ARGS = 7;
 	private static final int NUMBER_OF_TREES = 3;
@@ -50,6 +56,8 @@ public class Driver {
 				HashMap<String, Object> hm = (HashMap<String, Object>) lh.lineModifyProcessor(line);
 				th.modify(hm);
 			}
+			
+			MyLogger.writeMessage("Creating instances of Results", DebugLevel.DRIVER);
 			for (int i = 0; i < NUMBER_OF_TREES; i++) {
 				Results res11 = new Results(args[i + 1]);
 				th.printTree(res11, i);

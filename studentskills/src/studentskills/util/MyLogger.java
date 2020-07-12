@@ -11,6 +11,7 @@ public class MyLogger {
 	// FIXME: Add more enum values as needed for the assignment
 	public static enum DebugLevel {
 		CONSTRUCTOR, FILE_PROCESSOR, NONE, ALL, TREEHELPER, STUDENTRECORD, STUDENTRECORDS, DRIVER, LINEHANDLER, ERROR,
+		RESULTS,
 	};
 
 	private static DebugLevel debugLevel;
@@ -18,6 +19,9 @@ public class MyLogger {
 	// FIXME: Add switch cases for all the levels
 	public static void setDebugValue(int levelIn) {
 		switch (levelIn) {
+		case 11:
+			debugLevel = DebugLevel.RESULTS;
+			break;
 		case 10:
 			debugLevel = DebugLevel.ERROR;
 			break;
@@ -61,7 +65,7 @@ public class MyLogger {
 	public static void writeMessage(String message, DebugLevel levelIn) throws IOException {
 
 		if (levelIn == DebugLevel.ERROR) {
-			System.out.println(message);
+			System.err.println(message);
 			errorWriter.write(message);
 		} else if (levelIn == debugLevel)
 			System.out.println(message);

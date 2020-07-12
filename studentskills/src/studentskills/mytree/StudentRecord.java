@@ -91,18 +91,34 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 		this.skills = skills;
 	}
 
-	public StudentRecord myClone() throws CloneNotSupportedException {
+	/**
+	 * Make clones of the tree
+	 * @return cloned record
+	 * @throws CloneNotSupportedException
+	 * @throws IOException 
+	 */
+	public StudentRecord myClone() throws CloneNotSupportedException, IOException {
+		MyLogger.writeMessage("Cloning the student record", DebugLevel.STUDENTRECORD);
 		StudentRecord cloned = (StudentRecord) super.clone();
 		cloned.setObservers(new ArrayList<>());
 		return cloned;
 	}
 
+	/**
+	 * Register the Observer of the student record
+	 * @throws IOException 
+	 *
+	 */
 	@Override
-	public void registerObserver(ObserverI observer) {
+	public void registerObserver(ObserverI observer) throws IOException {
+		MyLogger.writeMessage("Register the observer", DebugLevel.STUDENTRECORD);
 		observers.add(observer);
 
 	}
 
+	/**
+	 *Remove the observer from the list of observers
+	 */
 	@Override
 	public void removeObserver(ObserverI observer) {
 		int i = observers.indexOf(observer);
@@ -110,14 +126,22 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 			observers.remove(i);
 	}
 
+	/**
+	 *Notifies all the observers
+	 */
 	@Override
 	public void notifyObservers() throws IOException {
+		MyLogger.writeMessage("NotifyObservers", DebugLevel.STUDENTRECORD);
 		for (int i = 0; i < observers.size(); i++) {
 			ObserverI observer = (ObserverI) observers.get(i);
 			observer.update(firstName, lastName, major, skills);
 		}
 	}
 
+	/**
+	 * Updates the records of the observers
+	 *
+	 */
 	@Override
 	public void update(String firstName, String lastName, String major, List<String> skills) throws IOException {
 		MyLogger.writeMessage("Update Method: Updates all the observers in StudentRecord", DebugLevel.STUDENTRECORD);
@@ -127,6 +151,11 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 		this.skills = skills;
 	}
 
+	/**
+	 * @param hm, modifies the current student record and notify other observers 
+	 * @param isInsertModify, to check if it is modify from insert file
+	 * @throws IOException
+	 */
 	public void modify(Map<String, Object> hm, boolean isInsertModify) throws IOException {
 
 		MyLogger.writeMessage("Modify Method: Updates the current node in StudentRecord", DebugLevel.STUDENTRECORD);
@@ -148,7 +177,6 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 
 			}
 			this.setSkills(existingSkills);
-			this.notifyObservers();
 
 		} else {
 
@@ -162,8 +190,9 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 				this.skills.remove(hm.get(StudentDetails.ORIG_VALUE.name()));
 				this.skills.add((String) hm.get(StudentDetails.NEW_VALUE.name()));
 			}
-			this.notifyObservers();
+			
 		}
+		this.notifyObservers();
 	}
 
 	@Override

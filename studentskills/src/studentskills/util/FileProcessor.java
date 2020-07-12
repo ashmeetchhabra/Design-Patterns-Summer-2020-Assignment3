@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 
+import studentskills.util.MyLogger.DebugLevel;
+
 /**
  * FileProcessor is a utility to be used to read in the contents of the input
  * file.
@@ -47,6 +49,7 @@ public final class FileProcessor {
 	 * @exception IOException On error encountered when reading from input file.
 	 */
 	public String poll() throws IOException {
+		MyLogger.writeMessage("Reading of file", DebugLevel.FILE_PROCESSOR);
 		return reader.readLine();
 	}
 
@@ -56,6 +59,7 @@ public final class FileProcessor {
 	 * @exception IOException On error encountered when closing the buffered reader.
 	 */
 	public void close() throws IOException {
+		MyLogger.writeMessage("Closing of file", DebugLevel.FILE_PROCESSOR);
 		reader.close();
 	}
 }

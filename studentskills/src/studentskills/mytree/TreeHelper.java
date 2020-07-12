@@ -10,6 +10,12 @@ import studentskills.util.MyLogger.DebugLevel;
 import studentskills.util.Results;
 import studentskills.util.StudentDetails;
 
+/**
+ * @author ashmeet
+ * 
+ * Class which creates the replica of the trees and modify the record
+ *
+ */
 public class TreeHelper {
 
 	Map<Integer, StudentRecords> hashMapStudentRecords = new HashMap<Integer, StudentRecords>();
@@ -24,9 +30,13 @@ public class TreeHelper {
 		}
 	}
 
+	/**
+	 * @param hm, HashMap which gets inserted to tree as a student record
+	 * @throws IOException
+	 */
 	public void insert(HashMap<String, Object> hm) throws IOException {
 
-		MyLogger.writeMessage("insert a record in TreeHelper", DebugLevel.TREEHELPER);
+		MyLogger.writeMessage("Insert a record in TreeHelper", DebugLevel.TREEHELPER);
 
 		StudentRecord sr = createStudentRecord(hm);
 
@@ -53,13 +63,23 @@ public class TreeHelper {
 		}
 	}
 
-	public void printTree(Results res, int i) throws IOException {
+	/**
+	 * @param res, Result object of the output file according to the tree
+	 * @param index, to get the index of the tree in the map of trees
+	 * @throws IOException
+	 */
+	public void printTree(Results res, int index) throws IOException {
 		MyLogger.writeMessage("Printing the in TreeHelper", DebugLevel.TREEHELPER);
 
-		System.out.println("Tree " + i);
-		hashMapStudentRecords.get(i).inorder(res);
+		System.out.println("Tree " + index);
+		hashMapStudentRecords.get(index).inorder(res);
 	}
 
+	/**
+	 * @param hm, create student record from hashmap
+	 * @return student record
+	 * @throws IOException
+	 */
 	private StudentRecord createStudentRecord(HashMap<String, Object> hm) throws IOException {
 
 		MyLogger.writeMessage("Creating the studentRecord by hashMap in TreeHelper", DebugLevel.TREEHELPER);
@@ -74,6 +94,10 @@ public class TreeHelper {
 
 	}
 
+	/**
+	 * @param hm, modifies the student record 
+	 * @throws IOException
+	 */
 	public void modify(Map<String, Object> hm) throws IOException {
 
 		MyLogger.writeMessage("modifying the studentRecords in TreeHelper", DebugLevel.TREEHELPER);
