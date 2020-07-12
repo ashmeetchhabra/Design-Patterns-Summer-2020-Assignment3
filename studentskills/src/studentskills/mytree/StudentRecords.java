@@ -4,13 +4,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import studentskills.util.MyLogger;
+import studentskills.util.MyLogger.DebugLevel;
 import studentskills.util.Results;
 import studentskills.util.StudentDetails;
 
 public class StudentRecords {
+
 	protected StudentRecord root = null;
 
-	public void insert(StudentRecord sr) {
+	public void insert(StudentRecord sr) throws IOException {
+		MyLogger.writeMessage("Insert node in tree", DebugLevel.STUDENTRECORDS);
+
 		/* If the tree is empty, return a new node */
 		if (root == null)
 			root = sr;
@@ -18,7 +23,7 @@ public class StudentRecords {
 		insert(root, sr);
 	}
 
-	private void insert(StudentRecord root, StudentRecord sr) {
+	private void insert(StudentRecord root, StudentRecord sr) throws IOException {
 
 		/* Otherwise, recur down the tree */
 		if (root.bNumber > sr.bNumber) {
@@ -46,11 +51,12 @@ public class StudentRecords {
 
 	}
 
-	public StudentRecord search(int bNum) {
+	public StudentRecord search(int bNum) throws IOException {
 		return search(root, bNum);
 	}
 
-	private StudentRecord search(StudentRecord root, int bNum) {
+	private StudentRecord search(StudentRecord root, int bNum) throws IOException {
+		MyLogger.writeMessage("Serach node in tree", DebugLevel.STUDENTRECORDS);
 		// Base Cases: root is null or key is present at root
 		if (root == null || root.bNumber == bNum)
 			return root;
@@ -65,6 +71,7 @@ public class StudentRecords {
 	}
 
 	public void inorder(Results res) throws IOException {
+		MyLogger.writeMessage("Print nodes in tree", DebugLevel.STUDENTRECORDS);
 		inorderRec(root, res);
 	}
 
@@ -74,8 +81,7 @@ public class StudentRecords {
 			inorderRec(root.leftChild, res);
 			System.out.print(root.bNumber + " " + root.firstName + " " + root.lastName + " " + root.gpa + " "
 					+ root.major + " ");
-			res.writeToFile(root.bNumber + " " + root.firstName + " " + root.lastName + " " + root.gpa + " "
-					+ root.major + " ");
+			res.writeToFile(String.valueOf(root.bNumber + " "));
 			for (String sk : root.skills) {
 				System.out.print(sk + " ");
 				res.writeToFile(sk + " ");

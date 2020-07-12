@@ -1,12 +1,13 @@
 package studentskills.mytree;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import studentskills.util.MyLogger;
+import studentskills.util.MyLogger.DebugLevel;
 import studentskills.util.StudentDetails;
 
 public class StudentRecord implements Cloneable, SubjectI, ObserverI {
@@ -19,7 +20,11 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 	List<String> skills = new ArrayList<String>();
 	Map<String, String> updateSkill = new HashMap<String, String>();
 
-	protected final List<ObserverI> observers = new ArrayList<>();
+	protected List<ObserverI> observers = new ArrayList<>();
+
+	public void setObservers(List<ObserverI> observers) {
+		this.observers = observers;
+	}
 
 	public StudentRecord(Integer bNumber) {
 		this.bNumber = bNumber;
@@ -87,7 +92,9 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 	}
 
 	public StudentRecord myClone() throws CloneNotSupportedException {
-		return (StudentRecord) super.clone();
+		StudentRecord cloned = (StudentRecord) super.clone();
+		cloned.setObservers(new ArrayList<>());
+		return cloned;
 	}
 
 	@Override
@@ -104,7 +111,7 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 	}
 
 	@Override
-	public void notifyObservers() {
+	public void notifyObservers() throws IOException {
 		for (int i = 0; i < observers.size(); i++) {
 			ObserverI observer = (ObserverI) observers.get(i);
 			observer.update(firstName, lastName, major, skills);
@@ -112,14 +119,17 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 	}
 
 	@Override
-	public void update(String firstName, String lastName, String major, List<String> skills) {
+	public void update(String firstName, String lastName, String major, List<String> skills) throws IOException {
+		MyLogger.writeMessage("Update Method: Updates all the observers in StudentRecord", DebugLevel.STUDENTRECORD);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.major = major;
 		this.skills = skills;
 	}
 
-	public void modify(Map<String, Object> hm, boolean isInsertModify) {
+	public void modify(Map<String, Object> hm, boolean isInsertModify) throws IOException {
+
+		MyLogger.writeMessage("Modify Method: Updates the current node in StudentRecord", DebugLevel.STUDENTRECORD);
 
 		if (isInsertModify) {
 			this.setFirstName((String) hm.get(StudentDetails.FIRST_NAME.name()));
@@ -129,14 +139,13 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 
 			List<String> existingSkills = this.getSkills();
 			List<String> newSkills = new ArrayList<String>((List<String>) hm.get(StudentDetails.SKILL.name()));
-	
+
 			for (String newSkill : newSkills) {
-				
-				if(!existingSkills.contains(newSkill)) {
+
+				if (!existingSkills.contains(newSkill)) {
 					existingSkills.add(newSkill);
 				}
-				
-				
+
 			}
 			this.setSkills(existingSkills);
 			this.notifyObservers();
@@ -149,7 +158,7 @@ public class StudentRecord implements Cloneable, SubjectI, ObserverI {
 				this.setLastName((String) hm.get(StudentDetails.NEW_VALUE.name()));
 			} else if (this.major.equals(hm.get(StudentDetails.ORIG_VALUE.name()))) {
 				this.setMajor((String) hm.get(StudentDetails.NEW_VALUE.name()));
-			} else {
+			} else if (this.skills.contains(hm.get(StudentDetails.ORIG_VALUE.name()))) {
 				this.skills.remove(hm.get(StudentDetails.ORIG_VALUE.name()));
 				this.skills.add((String) hm.get(StudentDetails.NEW_VALUE.name()));
 			}

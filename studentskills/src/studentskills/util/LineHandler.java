@@ -1,9 +1,11 @@
 package studentskills.util;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import studentskills.util.MyLogger.DebugLevel;
 
 public class LineHandler {
 	/**
@@ -12,10 +14,14 @@ public class LineHandler {
 	 * @param line: line of the Input file
 	 * @return HashMap<String, ?> of videoname and the parameters(Metrics and
 	 *         length)
+	 * @throws IOException
 	 */
-	public HashMap<String, ?> lineInputProcessor(String line) {
+	public HashMap<String, ?> lineInputProcessor(String line) throws IOException {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		List<String> skills = new ArrayList<String>();
+		int noOfSkills = 0;
+
+		MyLogger.writeMessage("InputLineProcessor", DebugLevel.LINEHANDLER);
 
 		System.out.println(line);
 		String s1[] = line.split(":");
@@ -27,28 +33,37 @@ public class LineHandler {
 		hm.put(StudentDetails.MAJOR.name(), ss[3]);
 
 		for (int i = 4; i < ss.length; i++) {
+			noOfSkills++;
 			skills.add(ss[i]);
 		}
 		hm.put(StudentDetails.SKILL.name(), skills);
+		if (noOfSkills > 10)
+			throw new RuntimeException("Number of Skills in the input file is more than 10");
 		return hm;
 	}
-	
-	public HashMap<String, ?> lineModifyProcessor(String line) throws ArrayIndexOutOfBoundsException {
+
+	public HashMap<String, ?> lineModifyProcessor(String line) throws IOException {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
+
+		MyLogger.writeMessage("ModifyLineProcessor", DebugLevel.LINEHANDLER);
 		String s1[] = line.split(",");
-		String treeNumber =s1[0];
+		String treeNumber = s1[0];
 		String bNumber = s1[1];
-		String s2[]=s1[2].split(":");
+		String s2[] = s1[2].split(":");
+
+		if (s2.length != 2) {
+			MyLogger.writeMessage("Missing new value", DebugLevel.ERROR);
+			throw new RuntimeException("New value missing");
+		}
+
 		String originalValue = s2[0];
-		
-		
 		String newValue = s2[1];
-		
+
 		hm.put(StudentDetails.REPLICA_ID.name(), Integer.parseInt(treeNumber));
 		hm.put(StudentDetails.B_NUMBER.name(), Integer.parseInt(bNumber));
-		hm.put(StudentDetails.ORIG_VALUE.name(), (String)originalValue);
-		hm.put(StudentDetails.NEW_VALUE.name(), (String)newValue);
+		hm.put(StudentDetails.ORIG_VALUE.name(), (String) originalValue);
+		hm.put(StudentDetails.NEW_VALUE.name(), (String) newValue);
 		return hm;
-		
+
 	}
 }
