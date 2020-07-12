@@ -1,5 +1,6 @@
 # CSX42: Assignment 3
 **Name:** Ashmeet kaur Chhabra
+Took First slag day for this assignment
 
 -----------------------------------------------------------------------
 
@@ -27,7 +28,7 @@ The above command compiles your code and generates .class files inside the BUILD
 ## Instructions to run:
 
 ```commandline
-ant -buildfile src/build.xml run -Dinput="input.txt" -Dout1="output1.txt" -Dout2="output2.txt" -Dout3="output3.txt" -Dmodify="modify.txt" -Derror="error.txt" -Ddebug="debug.txt"
+ant -buildfile src/build.xml run -Dinput="input.txt" -Dout1="output1.txt" -Dout2="output2.txt" -Dout3="output3.txt" -Dmodify="modify.txt" -Derror="error.txt" -Ddebug="7"
 ```
 Note: Arguments accept the absolute path of the files.
 
@@ -77,6 +78,6 @@ I am involved in plagiarism or cheating an official form will be
 submitted to the Academic Honesty Committee of the Watson School to
 determine the action that needs to be taken. "
 
-Date: 10 July 2020
+Date: 11 July 2020
 
 
